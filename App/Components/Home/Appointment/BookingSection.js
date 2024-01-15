@@ -12,7 +12,7 @@ export default function BookingSection({saloonInfo}) {
     const [next7days, setNext7days] = useState([]);
     const [selectedDate, setSelectedDate] = useState();
     const [selectedTime, setSelectedTime] = useState();
-    const [timeList, SetTimeList] = useState([]);
+    const [timeList, SetTimeList] = useState();
     const [userEmail, setUserEmail] = useState('');
     const [username, setUsername] = useState('');
     const [service,setService]=useState();
@@ -25,24 +25,17 @@ export default function BookingSection({saloonInfo}) {
 
     useEffect(()=>{
         getUser();
-        
+        console.log(myAppointments)
     },[])
     const getUser = async ()=>{
        let user= await AsyncStorage.getItem("username");
        setUsername(user);
     }
-    const getAvailableSlots=async()=>{
-        let slots = await AsyncStorage.getItem(saloonInfo.name);
-        return JSON.parse(slots);
-    }
 
     const SetService =(selectedService)=>{
-        setService(selectedService);
+        setService(selectedService)
     }
 
-    const updateTimeList=()=>{
-        if(getAvailableSlots()) SetTimeList(getAvailableSlots());
-    }
     const bookAppointment= async ()=>{
 
         if(selectedDate && selectedTime && userEmail && username){
@@ -52,17 +45,24 @@ export default function BookingSection({saloonInfo}) {
                     date:selectedDate,
                     email:userEmail,
                     time:selectedTime,
-                    loc:saloonInfo.location,
                     img:saloonInfo.imgUrl,
+                    loc:saloonInfo.location,
                     shop:saloonInfo.name,
                     location:saloonInfo.location,
             }
             // console.log(newAppointment);
             let tempAppointments = []
             tempAppointments = JSON.parse(await AsyncStorage.getItem("myAppointments"));
-            tempAppointments.map(item=>Appointments.push(item));
 
+            if(tempAppointments){
+                tempAppointments.map(item=>Appointments.push(item));
             Appointments.push(newAppointment);
+            console.log('tempp--',tempAppointments);
+            }
+            else{
+                Appointments.push(newAppointment);
+            }
+            
 
             await AsyncStorage.setItem("myAppointments",JSON.stringify(Appointments));
 
@@ -70,16 +70,10 @@ export default function BookingSection({saloonInfo}) {
             Toast.show("Appointment Booked Successfully.. ✅ ", Toast.LONG);
             //setMyAppointments([...myAppointments, newAppointment]);
 
-          
+            // Save the updated appointment list to AsyncStorage
            // saveAppointments([...myAppointments, newAppointment]);
            // await loadAppointments();
-            
-            const index=timeList.findIndex((time)=>time.time==selectedTime);
-            if(index==-1) {
-                timeList[index].slot=timeList[index].slot-1;
-            }
-            await AsyncStorage.setItem(saloonInfo.name,JSON.stringify(timeList))
-            navigation.navigate('Appointments');    
+            navigation.navigate('Appointments'); 
         }
         else{
             Toast.show("Please enter all the fields  ❌", Toast.LONG)
@@ -92,7 +86,6 @@ export default function BookingSection({saloonInfo}) {
         getTime();
         console.log(saloonInfo)
     }, [])
-
 
     const getDays = () => {
         const today = moment();
@@ -107,30 +100,27 @@ export default function BookingSection({saloonInfo}) {
         }
         setNext7days(nextSevenDays);
     }
-    // const findSlotByTime = (time) => {
-    //     const foundSlot = timeList.find(slot => slot.time === time);
-    //     return foundSlot ? foundSlot.slot : null;
-    //   };
     const getTime = () => {
         const timeList = [];
         for (let i =parseInt(saloonInfo.openAt); i <= 12; i++) {
-            // let found = findSlotByTime(`${i}:00 PM`)
             timeList.push({
                 time: i + ':00 AM',
-                slot: 2
+                slot:2
             })
+            // timeList.push({
+            //     time:i+1 +':00 AM'
+            // })
         }
         for (let i = 1; i <= parseInt(saloonInfo.closeAt); i++) {
-            // let found = findSlotByTime(`${i}:00 PM`)
             timeList.push({
                 time: i + ':00 PM',
-                slot: 2
+                slot:2
             })
             // timeList.push({
             //     time:i+1 +':00 PM'
             // })
         }
-        console.log(timeList)
+        // console.log(timeList)
         SetTimeList(timeList);
     }
 
@@ -149,7 +139,7 @@ export default function BookingSection({saloonInfo}) {
                 </TouchableOpacity>
             )} />
 
-            <Text style={{ fontSize: 15, fontWeight: 'bold', opacity: 0.6 }}>Select Time{'  available:('+saloonInfo.availabeSlots+')'}</Text>
+            <Text style={{ fontSize: 15, fontWeight: 'bold', opacity: 0.6 }}>Select Times{'  available:('+saloonInfo.availabeSlots+')'}</Text>
 
             <FlatList horizontal={true} data={timeList} renderItem={({ item }) => (
                 
@@ -160,20 +150,20 @@ export default function BookingSection({saloonInfo}) {
                     </Text>
                     <Text style={[{ fontSize: 14, opacity: 0.7, fontWeight: 500, padding: 4 }, selectedTime == item.time ? { color: "white" } : null]}>
                         {selectedTime==item.time? item.slot-1:item.slot}
-                    </Text> 
+                    </Text>
                 </TouchableOpacity>
 
             )} />
             <View>
-                <Text style={{ fontSize: 15, fontWeight: 'bold', opacity: 0.6, marginTop: 5 }}>Select Service</Text>
+                <Text style={{ fontSize: 15, fontWeight: 'bold', opacity: 0.6, marginTop: 15 }}>Select Service</Text>
 
                 <ServiceDropdown SetService={SetService} />
 
-                <Text style={{ fontSize: 15, fontWeight: 'bold', opacity: 0.6, marginTop: 15 }}>Username</Text>
+                <Text style={{ fontSize: 15, fontWeight: 'bold', opacity: 0.6, marginTop: 10 }}>Username</Text>
                 <TextInput style={styles.textInput} placeholder="Enter Username" value={username} onChangeText={(text) => setUsername(text)} />
                 <Text style={{ fontSize: 15, fontWeight: 'bold', opacity: 0.6, marginTop: 15 }}>Email</Text>
                 <TextInput style={styles.textInput} keyboardType="email-address" placeholder="Enter your email" value={userEmail} onChangeText={(text) => setUserEmail(text)} />
-                <View style={{marginTop:40,marginBottom:20}}>
+                <View style={{marginTop:20,marginBottom:20}}>
                 <TouchableOpacity style={styles.buttonContainer} onPress={()=>bookAppointment()}>
                     <Text style={styles.buttonText}>Book Now</Text>
                 </TouchableOpacity>
@@ -193,7 +183,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         alignItems: 'center',
         marginRight: 10,
-        borderColor: 'grey'
+        borderColor: '#dedede'
     },
     textInput: {
         width: '98%',

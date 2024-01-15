@@ -2,7 +2,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import React, { useRef, useEffect, useState } from 'react';
-import { View, Text, Image,StyleSheet, TextInput, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, Image,StyleSheet, TextInput, TouchableOpacity, Animated,StatusBar } from 'react-native';
 
 export default function Login({goToHomePage}){
   const curveHeight = useRef(new Animated.Value(200)).current;
@@ -22,7 +22,7 @@ export default function Login({goToHomePage}){
     setUsername('')
 
   }
-
+  StatusBar.setBackgroundColor("#197dff");
   return (
     <View style={styles.container}>
       <View style={styles.upperSection}>

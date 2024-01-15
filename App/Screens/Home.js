@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View,Scro,ScrollView } from 'react-native'
+import { Text, View,Scro,ScrollView ,StatusBar} from 'react-native'
 import Header from '../Components/Home/Header'
 import SearchBar from '../Components/Home/SearchBar'
 import Slider from '../Components/Home/Slider'
@@ -8,8 +8,9 @@ import Stylists from '../Components/Home/Stylists'
 
 
 export default function Home() {
+  StatusBar.setBackgroundColor("#fff");
     return (
-      <ScrollView style={{paddingLeft:10,paddingTop:20,marginTop:25}} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{paddingLeft:10,paddingTop:10,marginTop:12}} showsVerticalScrollIndicator={false}>
         <Header/>
         <SearchBar setSearchText={(value)=>console.log(value)}/>
         <Slider/>

@@ -47,7 +47,7 @@ export default function Services() {
             showsHorizontalScrollIndicator={false}
             renderItem={({item})=>(
                 <View style={{display:'flex',margin:2,alignItems:'center'}}>  
-                    <View style={{backgroundColor:'#fff',width:60,height:58,margin:8,padding:12,borderRadius:30,alignItems:'center'}}>
+                    <View style={{backgroundColor:'#fff',width:60,height:58,margin:8,padding:12,borderRadius:30,alignItems:'center',borderWidth:1,borderColor:'#dedede'}}>
                         {item.component}
                     </View>
                     <Text>

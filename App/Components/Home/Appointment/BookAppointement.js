@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View, Image } from 'react-native'
+import { Text, View, Image ,StatusBar} from 'react-native'
 import { EvilIcons } from '@expo/vector-icons';
 import BookingSection from './BookingSection';
 import { useRoute } from '@react-navigation/native';
@@ -8,10 +8,11 @@ export default function BookAppointement() {
 
     
     const params = useRoute().params;   
+    StatusBar.setBackgroundColor("#dedede");
     return (
         <View style={{backgroundColor:'#dedede'}}>
         <View style={{backgroundColor:'#dedede',marginTop:20,marginLeft:10,marginBottom:30}}>
-        <View style={{ marginTop: 25, display: 'flex', flexDirection: 'row',gap:5}}>
+        <View style={{ marginTop: 10, display: 'flex', flexDirection: 'row',gap:5}}>
             <View>
                 <Image style={{ height: 80, width: 100, borderRadius: 20 }} source={{ uri:params.saloonInfo.imgUrl}} />
             </View>

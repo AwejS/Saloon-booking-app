@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigations from './App/Navigations/TabNavigations';
 import { useEffect, useState } from 'react';
@@ -21,7 +21,7 @@ export default function App() {
     }
 
   return (
-    <>
+    <SafeAreaView style={styles.container}>
       <NavigationContainer>
 
       <Stack.Navigator screenOptions={{headerShown:false}}>
@@ -31,15 +31,12 @@ export default function App() {
       </Stack.Navigator>
       </NavigationContainer>
     
-     </> 
+     </SafeAreaView> 
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });

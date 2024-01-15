@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet ,StatusBar} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -11,15 +11,19 @@ export default function Appointments() {
   const isFocus = useIsFocused();
   useEffect(() => {
     loadAppointments();
-    
+    console.log('useeff----',myAppointments)
   }, [isFocus]);
+  StatusBar.setBackgroundColor("#fff");
 
   const loadAppointments = async () => {
     
     try {
       const storedAppointments = await AsyncStorage.getItem('myAppointments');
-      if (storedAppointments !== null || storedAppointments) {
+      console.log("dddd",JSON.parse(await AsyncStorage.getItem('myAppointments')));
+      if (storedAppointments !== null || storedAppointments ) {
         setMyAppointments(JSON.parse(storedAppointments));
+        console.log('storAp----',storedAppointments)
+        console.log('stor-----',myAppointments)
       }
     } catch (error) {
       console.error('Error loading appointments:', error);
@@ -35,8 +39,7 @@ export default function Appointments() {
   const navigation = useNavigation();
 
   const editBooking = (index) => {
-    // Implement edit booking logic here
-    // You can navigate to an edit screen or show a modal for editing the booking details
+    
     console.log('Edit booking at index:', index);
   };
 
@@ -67,7 +70,7 @@ export default function Appointments() {
   };
 
   return (
-    <View style={{ marginTop: 50, marginLeft: 5 }}>
+    <View style={{ marginTop: 20, marginLeft: 5 }}>
       <View style={{ marginLeft: 10, display: 'flex', flexDirection: 'row', gap: 5 }}>
         <TouchableOpacity onPress={() => navigation.navigate('home')}>
           <Ionicons name="arrow-back-outline" size={26} color="grey" />
