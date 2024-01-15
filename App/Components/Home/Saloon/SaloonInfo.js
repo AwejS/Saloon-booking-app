@@ -9,10 +9,8 @@ import Services from '../Services';
 export default function SaloonInfo({saloonInfo}) {
 
     const navigation = useNavigation();
-
     return (
         <View>
-            
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderBlockColor: '#dedede', borderBottomWidth: 1, paddingBottom: 4 }}>
                 <Text style={{ fontSize: 20, fontWeight: 'bold' }}> {saloonInfo.name}</Text>
                 <Text>⭐ {saloonInfo.rating}</Text>
@@ -42,10 +40,8 @@ export default function SaloonInfo({saloonInfo}) {
                     <View style={{ display: 'flex', flexDirection: 'row', marginTop: 4 }}>
                         <Text style={{ fontSize: 12 }}>❤️ 10</Text>
                         <Text style={{ opacity: 0.6, fontSize: 12 }}> 1month ago</Text>
-
                     </View>
                 </View>
-
                 <View>
                     <View style={{ display: 'flex', flexDirection: 'row', gap: 5, marginTop: 8,opacity:0.7   }}>
                         <FontAwesome5 name="user-circle" size={24} color="#5493ff" />
@@ -55,25 +51,18 @@ export default function SaloonInfo({saloonInfo}) {
                     <View style={{ display: 'flex', flexDirection: 'row', marginTop: 4 }}>
                         <Text style={{ fontSize: 12 }}>❤️ 10</Text>
                         <Text style={{ opacity: 0.6, fontSize: 12 }}> 1month ago</Text>
-
                     </View>
                 </View>
-
-
             </View>
             <View style={{marginTop:10}}>
             <TouchableOpacity style={styles.buttonContainer} onPress={() =>navigation.navigate('Book-appointment',{saloonInfo:saloonInfo})}>
                 <Text style={styles.buttonText}>Book Appointment</Text>
             </TouchableOpacity>
-
-            </View>
-            
-            
+            </View>  
         </View>
     )
 
 }
-
 
 const styles = StyleSheet.create({
     buttonContainer: {

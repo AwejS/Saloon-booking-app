@@ -11,7 +11,7 @@ export default function Appointments() {
   const isFocus = useIsFocused();
   useEffect(() => {
     loadAppointments();
-    console.log('useeff----',myAppointments)
+    
   }, [isFocus]);
   StatusBar.setBackgroundColor("#fff");
 
@@ -19,11 +19,8 @@ export default function Appointments() {
     
     try {
       const storedAppointments = await AsyncStorage.getItem('myAppointments');
-      console.log("dddd",JSON.parse(await AsyncStorage.getItem('myAppointments')));
       if (storedAppointments !== null || storedAppointments ) {
         setMyAppointments(JSON.parse(storedAppointments));
-        console.log('storAp----',storedAppointments)
-        console.log('stor-----',myAppointments)
       }
     } catch (error) {
       console.error('Error loading appointments:', error);

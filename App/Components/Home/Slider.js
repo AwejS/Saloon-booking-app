@@ -43,7 +43,7 @@ export default function Slider() {
         }
     ]
   return (
-    <View style={{marginTop:10}}>
+    <View style={{marginTop:5}}>
         <Text style={{margin:10,fontSize:17,fontWeight:'bold',opacity:0.7}}>Recommended for you</Text>
         <FlatList
             data={sliderList}

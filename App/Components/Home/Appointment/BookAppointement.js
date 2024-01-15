@@ -5,8 +5,6 @@ import BookingSection from './BookingSection';
 import { useRoute } from '@react-navigation/native';
 
 export default function BookAppointement() {
-
-    
     const params = useRoute().params;   
     StatusBar.setBackgroundColor("#dedede");
     return (
